@@ -1,9 +1,12 @@
+//MAINWINDOW.H
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QTcpSocket>
 #include <QTime>
+#include "MessageType.h"
+#include "authorization.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,10 +33,20 @@ private:
     Ui::MainWindow *ui;
     QTcpSocket* socket;
     QByteArray Data;
+    QString user;
+    Authorization* auth;
     void SendToServer(QString str);
     quint16 nextBlockSize;
 
 public slots:
     void slotReadyRead();
+    void receiveMessage(const QString &login, const QString &password, MessageType &mtype);
+
+signals:
+    void sendMessage(const QString &message);
+    void regDone();
+    void regError();
+    void auDone();
+    void auError(QString str);
 };
 #endif // MAINWINDOW_H

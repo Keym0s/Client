@@ -26,25 +26,32 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_pushButton_clicked()
-{
-}
-
 //Отправка сообщения на сервер
 void MainWindow::SendToServer(QString str)
 {
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_2);
-    out << quint16(0) << MessageType::Message << QTime::currentTime() << str;
+    out << quint16(0) << MessageType::Message << QTime::currentTime() << str << user;
     out.device()->seek(0);
     out << quint16(Data.size() - sizeof(quint16));
     socket->write(Data);
     ui->lineEdit->clear();
 }
 
-//Получение сообщения от окна авторизации, и перессылка на сервер
+//Запрос на получение контактов
+void MainWindow::GetContacts()
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << quint16(0) << MessageType::GetContacts;
+    out.device()->seek(0);
+    out << quint16(Data.size() - sizeof(quint16));
+    socket->write(Data);
+}
+
+//Получение запроса от окна авторизации, и перессылка на сервер
 void MainWindow::receiveMessage(const QString &login, const QString &password, MessageType &mtype)
 {
     Data.clear();
@@ -63,9 +70,6 @@ void MainWindow::slotReadyRead()
     in.setVersion(QDataStream::Qt_6_2);
     if(in.status() == QDataStream::Ok)
     {
-        // QString str;
-        // in >> str;
-        // ui->textBrowser->append(str);
         for(;;)
         {
             if(nextBlockSize == 0)
@@ -91,25 +95,38 @@ void MainWindow::slotReadyRead()
             {
 
                 in >> user;
+                ui->usernameLabel->setText(user);
                 auth->close();
+                GetContacts();
                 show();
-                SendToServer(user);
                 break;
             }
             case MessageType::AuthError:
             {
                 QString str;
                 in >> str;
-                auError(str);
+                emit auError(str);
                 break;
             }
-            case MessageType::Message:
+            case MessageType::JoinChat:
             {
-                QString str;
-                QTime time;
-                in >> time >> str;
-                nextBlockSize = 0;
-                ui->textBrowser->append(time.toString() + " " + str);
+                ui->textBrowser->clear();
+                QStringList messages;
+                in >> messages;
+                foreach (const QString &message, messages) {
+                    ui->textBrowser->append(message);
+                }
+                break;
+            }
+            case MessageType::GetContacts:
+            {
+                QStringList usernames;
+                in >> usernames;
+                ui->contactsList->clear();
+                foreach (const QString &username, usernames) {
+                    ui->contactsList->addItem(new QListWidgetItem(username));
+                }
+                break;
             }
 
             }
@@ -126,5 +143,20 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_lineEdit_returnPressed()
 {
     SendToServer(ui->lineEdit->text());
+}
+
+//При нажатии на контакт
+void MainWindow::on_contactsList_itemClicked(QListWidgetItem *item)
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    QStringList usernames;
+    usernames.append(user);
+    usernames.append(item->text());
+    out << quint16(0) << MessageType::JoinChat << usernames;
+    out.device()->seek(0);
+    out << quint16(Data.size() - sizeof(quint16));
+    socket->write(Data);
 }
 

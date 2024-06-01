@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>674</width>
+    <width>835</width>
     <height>524</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>440</y>
+      <x>308</x>
+      <y>430</y>
       <width>391</width>
       <height>26</height>
      </rect>
@@ -27,8 +27,8 @@
    <widget class="QTextBrowser" name="textBrowser">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>60</y>
+      <x>308</x>
+      <y>50</y>
       <width>511</width>
       <height>371</height>
      </rect>
@@ -37,8 +37,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>542</x>
-      <y>440</y>
+      <x>710</x>
+      <y>430</y>
       <width>111</width>
       <height>29</height>
      </rect>
@@ -66,13 +66,36 @@ QPushButton#pushButton_2:pressed {
      <string>Отправить</string>
     </property>
    </widget>
+   <widget class="QListWidget" name="contactsList">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>50</y>
+      <width>251</width>
+      <height>401</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="usernameLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>251</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>674</width>
+     <width>835</width>
      <height>26</height>
     </rect>
    </property>

@@ -5,6 +5,8 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 #include <QTime>
+#include <QStringListModel>
+#include <QListWidgetItem>
 #include "MessageType.h"
 #include "authorization.h"
 
@@ -23,11 +25,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
 
     void on_lineEdit_returnPressed();
+
+    void on_contactsList_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
@@ -35,7 +38,9 @@ private:
     QByteArray Data;
     QString user;
     Authorization* auth;
+    int currentChatID;
     void SendToServer(QString str);
+    void GetContacts();
     quint16 nextBlockSize;
 
 public slots:

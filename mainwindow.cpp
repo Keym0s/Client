@@ -91,7 +91,6 @@ void MainWindow::createNewChat(QStringList usernames, const QString chatname)
     out.device()->seek(0);
     out << quint16(Data.size() - sizeof(quint16));
     socket->write(Data);
-    GetChats();
 }
 
 //Чтение запроса от сервера
@@ -149,6 +148,7 @@ void MainWindow::slotReadyRead()
                     ui->textBrowser->append(message);
                 }
                 ui->membersList->addItems(members);
+
                 break;
             }
             case MessageType::GetContacts:
@@ -161,7 +161,7 @@ void MainWindow::slotReadyRead()
                         ui->contactsList->addItem(new QListWidgetItem(username));
                     }
                 }
-                else
+                else if (ui->ChatsButton->isChecked() == true)
                 {
                     emit membersForNewChat(usernames);
                 }

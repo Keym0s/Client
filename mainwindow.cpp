@@ -32,7 +32,7 @@ void MainWindow::SendToServer(QString str)
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_2);
-    out << quint16(0) << MessageType::Message << QTime::currentTime() << str << user;
+    out << quint16(0) << MessageType::Message << str;
     out.device()->seek(0);
     out << quint16(Data.size() - sizeof(quint16));
     socket->write(Data);
@@ -127,6 +127,12 @@ void MainWindow::slotReadyRead()
                     ui->contactsList->addItem(new QListWidgetItem(username));
                 }
                 break;
+            }
+            case MessageType::Message:
+            {
+                QString message;
+                in >> message;
+                ui->textBrowser->append(message);
             }
 
             }

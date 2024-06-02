@@ -11,16 +11,19 @@ CONFIG += c++17
 SOURCES += \
     authorization.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    newchat.cpp
 
 HEADERS += \
     MessageType.h \
     authorization.h \
-    mainwindow.h
+    mainwindow.h \
+    newchat.h
 
 FORMS += \
     authorization.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    newchat.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

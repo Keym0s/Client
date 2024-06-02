@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>835</width>
-    <height>524</height>
+    <width>841</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,16 +66,6 @@ QPushButton#pushButton_2:pressed {
      <string>Отправить</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="contactsList">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>50</y>
-      <width>251</width>
-      <height>401</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="usernameLabel">
     <property name="geometry">
      <rect>
@@ -86,8 +76,57 @@ QPushButton#pushButton_2:pressed {
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>Username</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>50</y>
+      <width>258</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="3" column="0" colspan="2">
+      <widget class="QLabel" name="membersLabel">
+       <property name="text">
+        <string>Участники</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QListWidget" name="contactsList"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QRadioButton" name="ChatsButton">
+       <property name="text">
+        <string>Чаты</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" colspan="2">
+      <widget class="QListWidget" name="membersList"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QRadioButton" name="ContactsButton">
+       <property name="text">
+        <string>Контакты</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QPushButton" name="createChatButton">
+       <property name="text">
+        <string>Создать новый чат</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -95,7 +134,7 @@ QPushButton#pushButton_2:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>835</width>
+     <width>841</width>
      <height>26</height>
     </rect>
    </property>
